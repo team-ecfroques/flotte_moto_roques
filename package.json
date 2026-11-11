@@ -1,0 +1,11 @@
+{
+  "name": "flotte-motos-roques",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "node scripts/prepare-pages.mjs",
+    "test": "node --test",
+    "start": "python3 scripts/serve.py",
+    "start:local": "python3 scripts/serve.py --bind 127.0.0.1"
+  }
+}

@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#106b6e">
+  <meta name="referrer" content="no-referrer">
+  <meta name="description" content="Gestion de la flotte motos de Roques : disponibilités, kilométrages et révisions.">
+  <title>Flotte motos Roques</title>
+  <link rel="stylesheet" href="./assets/css/styles.css">
+  <script type="module" src="./assets/js/bootstrap.js"></script>
+</head>
+<body>
+<main>
+  <header>
+    <div class="connection"><span id="connection" role="status" aria-live="polite">Chargement de la flotte…</span></div>
+    <h1>Flotte motos Roques</h1>
+  </header>
+  <p id="notice" role="status" aria-live="polite"></p>
+  <button id="reload" type="button" hidden>Actualiser la page</button>
+  <section id="fleet" hidden>
+    <form id="moto-form" class="panel" aria-label="Ajouter ou modifier une moto">
+      <fieldset id="fields">
+        <label>Immatriculation<input name="plate" id="plate" placeholder="AB-123-CD" maxlength="20" required autocomplete="off" spellcheck="false"></label>
+        <label>Modèle <span class="optional">(facultatif)</span><input name="model" placeholder="Ex. GSX-S 125" maxlength="60"></label>
+        <label>Statut<select name="status"><option value="available">Dispo</option><option value="repair">Réparation à prévoir</option><option value="unavailable">Pas dispo</option></select></label>
+        <div id="form-fault" class="fault-picker" hidden></div>
+        <label>Kilométrage<input name="mileage" type="number" min="0" max="9999999" step="1" placeholder="12500" required inputmode="numeric"></label>
+        <label>Kilométrage dernière révision<input name="service" type="number" min="0" max="9999999" step="1" placeholder="10000" inputmode="numeric"></label>
+        <div class="actions"><button id="save" class="primary" type="submit">Ajouter la moto</button><button type="button" id="cancel" hidden>Annuler</button></div>
+      </fieldset>
+    </form>
+    <details id="fault-manager" class="panel">
+      <summary>Gérer la liste des pannes <span id="fault-count"></span></summary>
+      <p class="hint">Supprimez les pannes inutiles de la liste. Les pannes déjà associées aux motos sont conservées. Pour rétablir une panne, ajoutez-la à nouveau depuis le choix de réparation.</p>
+      <div id="fault-list" aria-label="Pannes proposées"></div>
+    </details>
+    <h2 id="count" aria-live="polite">Chargement de la flotte…</h2>
+    <div id="list" aria-busy="true"><p class="empty">Récupération des motos et des pannes…</p></div>
+  </section>
+</main>
+<dialog id="delete-dialog" aria-labelledby="delete-title">
+  <h2 id="delete-title">Supprimer cette moto ?</h2>
+  <p id="delete-description"></p>
+  <p>Cette suppression est définitive.</p>
+  <div class="actions"><button id="delete-cancel">Annuler</button><button id="delete-confirm" class="danger">Supprimer</button></div>
+</dialog>
+<dialog id="repair-dialog" aria-labelledby="repair-title">
+  <form id="repair-form">
+    <h2 id="repair-title">Réparation à prévoir</h2>
+    <p id="repair-moto" class="repair-moto"></p>
+    <p class="hint">Quelle panne faut-il prendre en charge ?</p>
+    <fieldset id="repair-fields"><div id="dialog-fault" class="fault-picker"></div></fieldset>
+    <p id="repair-error" class="form-error" role="alert" hidden></p>
+    <div class="actions"><button type="button" id="repair-cancel">Annuler</button><button type="submit" class="primary" id="repair-save">Enregistrer la panne</button></div>
+  </form>
+</dialog>
+<noscript>Activez JavaScript pour utiliser la gestion de flotte.</noscript>
+</body>
+</html>

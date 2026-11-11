@@ -1,0 +1,48 @@
+{
+  "rules": {
+    ".read": false,
+    ".write": false,
+    "hiddenFaultTypes": {
+      ".read": true,
+      "$id": {
+        ".write": true,
+        ".validate": "newData.isString() && newData.val().length > 0 && newData.val().length <= 120"
+      }
+    },
+    "faultTypes": {
+      ".read": true,
+      "$id": {
+        ".write": true,
+        ".validate": "newData.isString() && newData.val().length > 0 && newData.val().length <= 120"
+      }
+    },
+    "motos": {
+      ".read": true,
+      "$id": {
+        ".write": true,
+        ".validate": "newData.hasChildren(['plate', 'model', 'status', 'mileage']) && (!newData.child('service').exists() || newData.child('service').val() <= newData.child('mileage').val()) && ((newData.child('status').val() === 'repair' && newData.child('fault').exists()) || (newData.child('status').val() !== 'repair' && !newData.child('fault').exists()))",
+        "plate": {
+          ".validate": "newData.isString() && newData.val() === $id && newData.val().matches(/^[A-Z0-9-]{2,20}$/)"
+        },
+        "model": {
+          ".validate": "newData.isString() && newData.val().length <= 60"
+        },
+        "status": {
+          ".validate": "newData.val() === 'available' || newData.val() === 'repair' || newData.val() === 'unavailable'"
+        },
+        "mileage": {
+          ".validate": "newData.isNumber() && newData.val() >= 0 && newData.val() <= 9999999 && newData.val() % 1 === 0"
+        },
+        "service": {
+          ".validate": "newData.isNumber() && newData.val() >= 0 && newData.val() <= 9999999 && newData.val() % 1 === 0"
+        },
+        "fault": {
+          ".validate": "newData.isString() && newData.val().length > 0 && newData.val().length <= 120 && newData.parent().child('status').val() === 'repair'"
+        },
+        "$other": {
+          ".validate": false
+        }
+      }
+    }
+  }
+}

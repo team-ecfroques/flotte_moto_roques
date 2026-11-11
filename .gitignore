@@ -1,0 +1,30 @@
+# Fichiers locaux et dépendances
+.DS_Store
+node_modules/
+dist/
+coverage/
+*.log
+__pycache__/
+
+# Secrets : ne jamais les versionner
+.env
+.env.*
+!.env.example
+*service-account*.json
+*serviceAccount*.json
+*firebase-adminsdk*.json
+credentials*.json
+*.pem
+*.key
+*.p12
+*.pfx
+
+# Exports contenant des données ou comptes utilisateurs
+/exports/
+/backups/
+firebase-users*.json
+firebase-users*.csv
+database-export*.json
+*.sqlite
+*.sqlite3
+*.db
